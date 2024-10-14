@@ -1,10 +1,9 @@
 "use client";
-import { Layout, Typography, List, Button } from "antd";
+import { Layout, List } from "antd";
 import Card from "antd/es/card/Card";
 import PlaidButton from "../components/PlaidButton";
 
 const { Content } = Layout;
-const { Title } = Typography;
 
 const data = [
   {

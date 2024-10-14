@@ -2,16 +2,11 @@
 import {
   LineChartOutlined,
   ClockCircleOutlined,
-  AuditOutlined,
-  FileSearchOutlined,
-  FolderOpenOutlined,
-  CheckSquareOutlined,
-  TeamOutlined,
+  BankOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
 import Link from "next/link";
-import { Metadata } from "next/types";
 import * as React from "react";
 import GlobalHeader from "../components/GlobalHeader";
 import "./globals.css";
@@ -21,16 +16,13 @@ const { Content, Sider } = Layout;
 const siderItems: MenuProps["items"] = [
   { icon: LineChartOutlined, label: <Link href="/">Home</Link> },
   {
-    icon: ClockCircleOutlined,
-    label: <Link href="/time-entry">Banks</Link>,
+    icon: BankOutlined,
+    label: <Link href="/bank_feed">Bank Feed</Link>,
   },
   {
-    icon: FileSearchOutlined,
-    label: <Link href="/transactions">Transactions</Link>,
+    icon: ClockCircleOutlined,
+    label: <Link href="/banks">Banks & Accounts</Link>,
   },
-  { icon: CheckSquareOutlined, label: "Forecasting" },
-  { icon: AuditOutlined, label: "Bank Reconciliation" },
-  { icon: FolderOpenOutlined, label: "Payments" },
 ].map((icon, index) => {
   const key = String(index + 1);
 

@@ -13,7 +13,7 @@ export default function PlaidButton() {
     const fetchLinkToken = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8000/create_link_token",
+          "http://localhost:8000/link_token/create",
           {
             method: "POST",
             headers: {
@@ -35,7 +35,7 @@ export default function PlaidButton() {
     try {
       // Send the public token to the backend for exchange
       const response = await fetch(
-        "http://localhost:8000/exchange_public_token",
+        "http://localhost:8000/link_token/exchange",
         {
           method: "POST",
           headers: {
