@@ -1,4 +1,6 @@
 "use client";
+import { fetchTransactions } from "@/data-access/transactions";
+import { fetchERPFields } from "@/data-access/erpFields";
 import { default_accounting_fields } from "@/lib/default_values";
 import { AccountingFields, Transaction } from "@/types/types";
 import { useEffect, useState } from "react";
@@ -11,33 +13,21 @@ export default function BankFeedPage() {
   );
 
   useEffect(() => {
-    const fetchTransactions = async () => {
+    const fetchTransactionsData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/accounts/details", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
+        const data = await fetchTransactions();
         setTransactions(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching tranactions:", error);
       }
     };
-    fetchTransactions();
+    fetchTransactionsData();
   }, []);
 
   useEffect(() => {
     const fetchAccountingFields = async () => {
       try {
-        const response = await fetch("http://localhost:8000/fields", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
+        const data = await fetchERPFields();
         setFields(data);
       } catch (error) {
         console.error("Error fetching tranactions:", error);
