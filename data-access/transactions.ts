@@ -5,8 +5,11 @@ export async function fetchTransactions() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "Cache-Control": "no-store",
     },
   });
   const data = await response.json();
-  return data;
+  const dto = data;
+  console.log(dto);
+  return dto;
 }
