@@ -6,12 +6,12 @@ import { Table } from "antd";
 
 interface Props {
   transactions: Transaction[];
-  accounting_fields: AccountingFields;
+  accountingFields: AccountingFields;
 }
 
 export default function BankFeedDataTable({
   transactions,
-  accounting_fields,
+  accountingFields,
 }: Props) {
   const transactionsData = transactions.map((trans) => {
     return {

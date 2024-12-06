@@ -1,28 +1,13 @@
-"use client";
-import { BankAccount } from "@/types/types";
-import { useEffect, useState } from "react";
+import { fetchBanks } from "@/data-access/banks";
 import BankAdminDataTable from "./bankAdminDataTable";
 
-export default function BanksPage() {
-  const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([]);
+export default async function BanksPage() {
+  const bankAccounts = await fetchBanks();
 
-  useEffect(() => {
-    const fetchBanks = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/accounts", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        setBankAccounts(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error("Error fetching Banks:", error);
-      }
-    };
-    fetchBanks();
-  }, []);
+  if (!bankAccounts) {
+    return <h1>Loading....</h1>;
+  }
+  const bankAccountDataTableData = bankAccounts.accounts;
 
-  return <BankAdminDataTable bank_accounts={bankAccounts} />;
+  return <BankAdminDataTable bank_accounts={bankAccountDataTableData} />;
 }
