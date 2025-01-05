@@ -13,16 +13,20 @@ export default function PlaidButton() {
     const fetchLinkToken = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8000/link_token/create",
+          "http://localhost:8080/v1/api/link/generate-token",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "Cache-Control": "no-store",
             },
+            body: JSON.stringify({
+              clientUserId: "1234",
+            }),
           }
         );
         const data = await response.json();
-        setLinkToken(data.link_token);
+        setLinkToken(data.linkToken);
       } catch (error) {
         console.error("Error fetching link token:", error);
       }
@@ -31,17 +35,17 @@ export default function PlaidButton() {
     fetchLinkToken();
   }, []);
 
-  const handleOnSuccess = async (public_token: string, metadata: any) => {
+  const handleOnSuccess = async (publicToken: string, metadata: any) => {
     try {
       // Send the public token to the backend for exchange
       const response = await fetch(
-        "http://localhost:8000/link_token/exchange",
+        "http://localhost:8080/v1/api/link/exchange-token",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ public_token }), // Send the public token to the backend
+          body: JSON.stringify({ publicToken }), // Send the public token to the backend
         }
       );
 
