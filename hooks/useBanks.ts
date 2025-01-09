@@ -1,9 +1,9 @@
 import { fetchBanks } from "@/data/fetchBanks";
-import { Bank } from "@/types/bankTypes";
+import { BankAPIGetResponse } from "@/types/bankTypes";
 import { useEffect, useState } from "react";
 
 export default function useBanks() {
-  const [banks, setBanks] = useState<Bank[]>();
+  const [banks, setBanks] = useState<BankAPIGetResponse[]>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -12,7 +12,7 @@ export default function useBanks() {
       setLoading(true);
       setError(null);
       try {
-        const data = await fetchBanks(true);
+        const data = await fetchBanks(false);
         setBanks(data);
       } catch (err: any) {
         setError(err.message || "An unknown error occurred");

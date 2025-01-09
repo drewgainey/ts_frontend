@@ -1,5 +1,5 @@
 export interface DataTableBanks {
-  bankId: string;
+  bankId: number;
   institution: string;
   accountName: string;
   accountType: string;

@@ -7,7 +7,6 @@ import { selectDataTableBankData } from "./selectors";
 
 export default function BanksPage() {
   const { banks, loading } = useBanks();
-  // Need selector to map banks to format needed for data table
   const dataTableBanks = selectDataTableBankData(banks);
   if (loading) {
     return "loading..";

@@ -5,7 +5,7 @@ const baseUrl = process.env.NEXT_PUBLIC_DAL_BASE_URL;
 export async function fetchBanks(useMock: boolean) {
   let data;
   if (useMock == false) {
-    const response = await fetch(`${baseUrl}/banks`, {
+    const response = await fetch(`${baseUrl}/banks/accounts`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

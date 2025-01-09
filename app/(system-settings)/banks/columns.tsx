@@ -22,7 +22,7 @@ export const columns: ColumnDef<DataTableBanks>[] = [
   },
   {
     accessorKey: "currentBalance",
-    header: () => <div className="text-right">Current Balance</div>,
+    header: () => <div>Current Balance</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("currentBalance"));
       const formatted = new Intl.NumberFormat("en-US", {
@@ -30,12 +30,12 @@ export const columns: ColumnDef<DataTableBanks>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
     accessorKey: "availableBalance",
-    header: () => <div className="text-right">Available Balance</div>,
+    header: () => <div>Available Balance</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("availableBalance"));
       const formatted = new Intl.NumberFormat("en-US", {
@@ -43,10 +43,13 @@ export const columns: ColumnDef<DataTableBanks>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
-    header: "Accounting Defaults",
+    header: "GL Code",
+  },
+  {
+    header: "Department",
   },
 ];
