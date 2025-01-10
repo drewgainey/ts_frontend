@@ -1,9 +1,9 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { DataTableBanks } from "./types";
+import { DataTableRows } from "./types";
 
-export const columns: ColumnDef<DataTableBanks>[] = [
+export const columns: ColumnDef<DataTableRows>[] = [
   {
     accessorKey: "bankId",
     header: "Bank ID",

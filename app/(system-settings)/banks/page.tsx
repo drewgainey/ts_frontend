@@ -1,5 +1,6 @@
 "use client";
 import PlaidButton from "@/components/plaid/PlaidButton";
+import useAccountingFields from "@/hooks/useAccountingFields";
 import useBanks from "@/hooks/useBanks";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
@@ -7,6 +8,7 @@ import { selectDataTableBankData } from "./selectors";
 
 export default function BanksPage() {
   const { banks, loading } = useBanks();
+  const { accountingFields } = useAccountingFields();
   const dataTableBanks = selectDataTableBankData(banks);
   if (loading) {
     return "loading..";

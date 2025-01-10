@@ -12,7 +12,7 @@ export default function useBanks() {
       setLoading(true);
       setError(null);
       try {
-        const data = await fetchBanks(false);
+        const data = await fetchBanks();
         setBanks(data);
       } catch (err: any) {
         setError(err.message || "An unknown error occurred");

@@ -1,9 +1,9 @@
 import { BankAPIGetResponse } from "@/types/bankTypes";
-import { DataTableBanks } from "./types";
+import { DataTableRows } from "./types";
 
 export function selectDataTableBankData(
   banks?: BankAPIGetResponse[]
-): DataTableBanks[] {
+): DataTableRows[] {
   if (!banks || banks.length === 0) {
     return [];
   }

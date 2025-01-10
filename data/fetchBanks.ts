@@ -1,20 +1,15 @@
-import { testBanks } from "./mocks/testBankAccounts";
-
+"use server";
 const baseUrl = process.env.NEXT_PUBLIC_DAL_BASE_URL;
 
-export async function fetchBanks(useMock: boolean) {
-  let data;
-  if (useMock == false) {
-    const response = await fetch(`${baseUrl}/banks/accounts`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "no-store",
-      },
-    });
-    data = await response.json();
-  } else {
-    data = testBanks;
-  }
+export async function fetchBanks() {
+  const response = await fetch(`${baseUrl}/banks/accounts`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
+    },
+  });
+  const data = await response.json();
+
   return data;
 }
