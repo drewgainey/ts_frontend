@@ -1,10 +1,19 @@
-import { Button } from "antd";
 import { useEffect, useState } from "react";
 import {
   usePlaidLink,
   PlaidLinkOptions,
   PlaidLinkOnSuccess,
 } from "react-plaid-link";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "../ui/button";
 
 export default function PlaidButton() {
   const [linkToken, setLinkToken] = useState<string | null>(null);
@@ -72,12 +81,19 @@ export default function PlaidButton() {
   const { open, exit, ready } = usePlaidLink(config);
 
   return (
-    <Button
-      type="primary"
-      onClick={() => open()}
-      disabled={!ready || !linkToken}
-    >
-      Connect
-    </Button>
+    <Card>
+      <CardHeader>
+        <CardTitle>Connect Bank Accounts</CardTitle>
+        <CardDescription>
+          Use Plaid to link bank accounts with SyncLedgers
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Button onClick={() => open()} disabled={!ready || !linkToken}>
+          Connect
+        </Button>
+      </CardContent>
+      <CardFooter></CardFooter>
+    </Card>
   );
 }

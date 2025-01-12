@@ -1,31 +1,17 @@
 "use client";
-import { Layout, List } from "antd";
-import Card from "antd/es/card/Card";
-import PlaidButton from "../components/PlaidButton";
-
-const { Content } = Layout;
-
-const data = [
-  {
-    title: "Connect Accounts",
-    content: <PlaidButton />,
-  },
-];
+import PlaidButton from "@/components/plaid/PlaidButton";
 
 export default function Home() {
   return (
-    <Layout>
-      <Content style={{ margin: "0px 16px 0" }}>
-        <List
-          grid={{ gutter: 16, column: 2 }}
-          dataSource={data}
-          renderItem={(item) => (
-            <List.Item>
-              <Card title={item.title}>{item.content}</Card>
-            </List.Item>
-          )}
-        />
-      </Content>
-    </Layout>
+    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+        <div className="rounded-xl bg-muted/50">
+          <PlaidButton />
+        </div>
+        <div className="rounded-xl bg-muted/50" />
+        <div className="rounded-xl bg-muted/50" />
+      </div>
+      <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+    </div>
   );
 }

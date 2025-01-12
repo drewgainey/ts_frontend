@@ -1,3 +1,4 @@
+"use server";
 import { testTransactions } from "./mocks/testTransactions";
 
 const baseUrl = process.env.NEXT_PUBLIC_DAL_BASE_URL;
