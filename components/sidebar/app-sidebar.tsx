@@ -80,6 +80,10 @@ const data = {
           url: "/banks",
         },
         {
+          title: "Accounting Fields",
+          url: "/fields",
+        },
+        {
           title: "ERP Settings",
           url: "#",
         },

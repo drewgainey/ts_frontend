@@ -48,8 +48,10 @@ export const columns: ColumnDef<DataTableRows>[] = [
   },
   {
     header: "GL Code",
+    accessorKey: "glAccount",
   },
   {
     header: "Department",
+    accessorKey: "department",
   },
 ];

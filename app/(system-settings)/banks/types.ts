@@ -5,6 +5,6 @@ export interface DataTableRows {
   accountType: string;
   currentBalance: number;
   availableBalance: number;
-  // glAccount: string;
-  // department: string;
+  glAccount?: string;
+  department?: string;
 }

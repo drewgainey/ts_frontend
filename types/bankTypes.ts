@@ -7,4 +7,12 @@ export interface BankAPIGetResponse {
   type: string;
   subType: string;
   balance: number;
+  defaultFields: BankAPIGetResponseDefaultField[];
+}
+
+export interface BankAPIGetResponseDefaultField {
+  fieldName: string;
+  fieldId: number;
+  fieldValue: string;
+  fieldValueId: number;
 }
