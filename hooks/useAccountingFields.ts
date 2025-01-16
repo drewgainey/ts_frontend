@@ -13,9 +13,8 @@ export default function useAccountingFields() {
       setLoading(true);
       setError(null);
       try {
-        const data = await fetchAccountingFields();
-        console.log(data);
-        setAccountingFields(data);
+        const response = await fetchAccountingFields();
+        setAccountingFields(response.data);
       } catch (err: any) {
         setError(err.message || "An unknown error occurred");
       } finally {

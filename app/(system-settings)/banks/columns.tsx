@@ -1,5 +1,6 @@
 "use client";
 
+import { DataTableSelect } from "@/components/DataTableSelect";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableRows } from "./types";
 
@@ -49,6 +50,12 @@ export const columns: ColumnDef<DataTableRows>[] = [
   {
     header: "GL Code",
     accessorKey: "glAccount",
+    cell: ({ row }) => {
+      const options = ["1", "2", "3"];
+      return (
+        <DataTableSelect value={row.getValue("glAccount")} options={options} />
+      );
+    },
   },
   {
     header: "Department",
