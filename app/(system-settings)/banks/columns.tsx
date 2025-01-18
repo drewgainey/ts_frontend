@@ -35,7 +35,7 @@ export const getColumns = (
         />
       ),
       enableSorting: false,
-      enableHiding: true,
+      enableHiding: false,
     },
     {
       accessorKey: "bankId",

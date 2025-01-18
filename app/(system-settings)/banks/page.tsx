@@ -2,11 +2,13 @@
 import PlaidButton from "@/components/plaid/PlaidButton";
 import useAccountingFields from "@/hooks/useAccountingFields";
 import useBanks from "@/hooks/useBanks";
+import React from "react";
 import { getColumns } from "./columns";
 import { DataTable } from "./data-table";
 import { selectDataTableBankData } from "./selectors";
 
 export default function BanksPage() {
+  const [selectedBanks, setSelectedBankData] = React.useState<any[]>([]);
   const { banks, loading: banksLoading } = useBanks();
   const { accountingFields, loading: accountingFieldsLoading } =
     useAccountingFields();
@@ -30,7 +32,11 @@ export default function BanksPage() {
         </div>
       </div>
       <div className="min-h-[100vh] flex-1 rounded-xl md:min-h-min">
-        <DataTable columns={columns} data={dataTableBanks} />
+        <DataTable
+          columns={columns}
+          data={dataTableBanks}
+          setSelectedData={setSelectedBankData}
+        />
       </div>
     </div>
   );
