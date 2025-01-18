@@ -1,10 +1,10 @@
 import { fetchAccountingFields } from "@/data/fetchAccountingFields";
-import { AccountingFeildsAPIGetResponse } from "@/types/accountingFieldtypes";
+import { AccountingFeildsAPIGetResponseData } from "@/types/accountingFieldtypes";
 import { useEffect, useState } from "react";
 
 export default function useAccountingFields() {
   const [accountingFields, setAccountingFields] =
-    useState<AccountingFeildsAPIGetResponse>();
+    useState<AccountingFeildsAPIGetResponseData>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,7 +14,8 @@ export default function useAccountingFields() {
       setError(null);
       try {
         const response = await fetchAccountingFields();
-        setAccountingFields(response.data);
+        const fields = { values: response.data };
+        setAccountingFields(fields);
       } catch (err: any) {
         setError(err.message || "An unknown error occurred");
       } finally {

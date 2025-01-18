@@ -2,17 +2,25 @@
 import PlaidButton from "@/components/plaid/PlaidButton";
 import useAccountingFields from "@/hooks/useAccountingFields";
 import useBanks from "@/hooks/useBanks";
-import { columns } from "./columns";
+import { getColumns } from "./columns";
 import { DataTable } from "./data-table";
 import { selectDataTableBankData } from "./selectors";
 
 export default function BanksPage() {
-  const { banks, loading } = useBanks();
-  const { accountingFields } = useAccountingFields();
-  const dataTableBanks = selectDataTableBankData(banks);
-  if (loading) {
+  const { banks, loading: banksLoading } = useBanks();
+  const { accountingFields, loading: accountingFieldsLoading } =
+    useAccountingFields();
+
+  if (
+    banksLoading ||
+    accountingFieldsLoading ||
+    accountingFields == undefined
+  ) {
     return "loading..";
   }
+
+  const dataTableBanks = selectDataTableBankData(banks);
+  const columns = getColumns(accountingFields);
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">

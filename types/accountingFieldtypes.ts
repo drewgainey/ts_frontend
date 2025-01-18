@@ -5,18 +5,11 @@ export interface AccountingFieldValue {
 }
 
 export interface AccountingField {
-  fieldId: string;
+  id: string;
   fieldName: string;
-  fieldValues: AccountingFieldValue[];
-}
-//delete the above types when no longer in use
-export interface AccountingFeildsAPIGetResponse {
-  id: number;
-  fieldName: string;
-  values: AccountingFeildAPIGetResponseValue[];
+  values: AccountingFieldValue[];
 }
 
-export interface AccountingFeildAPIGetResponseValue {
-  id: number;
-  fieldValue: string;
+export interface AccountingFeildsAPIGetResponseData {
+  values: AccountingField[];
 }
