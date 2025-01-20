@@ -93,22 +93,20 @@ export const getColumns = (
           const bankId = row.getValue("bankId") as string;
           const bankIdNum = parseInt(bankId, 0);
 
-          const updatePayload = {
-            defaultFields: [
-              {
-                fieldName: "Department",
-                fieldId: 2,
-                fieldValue: row.getValue("department"),
-                fieldValueId: row.getValue("departmentId"),
-              },
-              {
-                fieldName: "GL Code",
-                fieldId: 1,
-                fieldValue: value,
-                fieldValueId: id,
-              },
-            ],
-          };
+          const updatePayload = [
+            {
+              fieldName: "Department",
+              fieldId: 2,
+              fieldValue: row.getValue("department"),
+              fieldValueId: row.getValue("departmentId"),
+            },
+            {
+              fieldName: "GL Code",
+              fieldId: 1,
+              fieldValue: value,
+              fieldValueId: id,
+            },
+          ];
           updateBank(bankIdNum, updatePayload);
         };
 
@@ -142,6 +140,7 @@ export const getColumns = (
     },
     {
       accessorKey: "glAccountId",
+      id: "glAccountId",
       enableHiding: true,
     },
     {
@@ -154,22 +153,20 @@ export const getColumns = (
           const bankId = row.getValue("bankId") as string;
           const bankIdNum = parseInt(bankId, 0);
 
-          const updatePayload = {
-            defaultFields: [
-              {
-                fieldName: "Department",
-                fieldId: 2,
-                fieldValue: value,
-                fieldValueId: parseInt(id),
-              },
-              {
-                fieldName: "GL Code",
-                fieldId: 1,
-                fieldValue: row.getValue("glAccount"),
-                fieldValueId: row.getValue("glAccountId"),
-              },
-            ],
-          };
+          const updatePayload = [
+            {
+              fieldName: "Department",
+              fieldId: 2,
+              fieldValue: value,
+              fieldValueId: parseInt(id),
+            },
+            {
+              fieldName: "GL Code",
+              fieldId: 1,
+              fieldValue: row.getValue("glAccount"),
+              fieldValueId: row.getValue("glAccountId"),
+            },
+          ];
 
           updateBank(bankIdNum, updatePayload);
         };
@@ -205,6 +202,7 @@ export const getColumns = (
     },
     {
       accessorKey: "departmentId",
+      id: "departmentId",
       enableHiding: true,
     },
   ];

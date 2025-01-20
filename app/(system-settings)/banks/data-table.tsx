@@ -37,11 +37,13 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onRowSelectionChange: setRowSelection,
+    initialState: {
+      columnVisibility: {
+        glAccountId: false,
+        departmentId: false,
+      },
+    },
     state: {
-      // Check ShadCn documentation to determine if I need the other state
-      // sorting,
-      // columnFilters,
-      // columnVisibility,
       rowSelection,
     },
   });
@@ -50,11 +52,10 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="rounded-md border">
         <div className="flex">
-          <div>
-            <Checkbox />
-            <Label>Edit</Label>
-          </div>
-          <DataTableViewOptions table={table} />
+          <DataTableViewOptions
+            table={table}
+            excludedColumnIds={["glAccountId", "departmentId"]}
+          />
         </div>
         <Table>
           <TableHeader>

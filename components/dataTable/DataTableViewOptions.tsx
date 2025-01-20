@@ -15,10 +15,12 @@ import {
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
+  excludedColumnIds?: string[];
 }
 
 export function DataTableViewOptions<TData>({
   table,
+  excludedColumnIds,
 }: DataTableViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
@@ -42,6 +44,9 @@ export function DataTableViewOptions<TData>({
               typeof column.accessorFn !== "undefined" && column.getCanHide()
           )
           .map((column) => {
+            if (excludedColumnIds) {
+              if (excludedColumnIds.includes(column.id)) return;
+            }
             return (
               <DropdownMenuCheckboxItem
                 key={column.id}

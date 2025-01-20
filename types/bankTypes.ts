@@ -7,10 +7,10 @@ export interface BankAPIGetResponse {
   type: string;
   subType: string;
   balance: number;
-  defaultFields: BankAPIGetResponseDefaultField[];
+  defaultFields: BankAccountDefaultField[];
 }
 
-export interface BankAPIGetResponseDefaultField {
+export interface BankAccountDefaultField {
   fieldName: string;
   fieldId: number;
   fieldValue: string;
@@ -19,5 +19,5 @@ export interface BankAPIGetResponseDefaultField {
 
 export interface BankAccountDefaultFieldUpdates {
   bankAccountId: number;
-  defaultFields: BankAPIGetResponseDefaultField[];
+  defaultFields: BankAccountDefaultField[];
 }

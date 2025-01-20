@@ -1,5 +1,6 @@
-import { fetchBanks } from "@/data/fetchBanks";
+import { fetchBanks, postBankUpates } from "@/data/banks";
 import {
+  BankAccountDefaultField,
   BankAccountDefaultFieldUpdates,
   BankAPIGetResponse,
 } from "@/types/bankTypes";
@@ -29,14 +30,17 @@ export default function useBanks() {
     fetchData();
   }, []);
 
-  const updateBank = (bankId: number, updatedData: any) => {
+  const updateBank = (
+    bankId: number,
+    updatedData: BankAccountDefaultField[]
+  ) => {
     setBanks((currentBanks) => {
       if (!currentBanks) {
         return [];
       }
       return currentBanks.map((bank) => {
         if (bank.id === bankId) {
-          return { ...bank, ...updatedData };
+          return { ...bank, defaultFields: updatedData };
         }
         return bank;
       });
@@ -49,19 +53,18 @@ export default function useBanks() {
         defaultFields: updatedData,
       };
       if (index === -1) {
-        // If the bankId is not found, add the new update
         return [...prev, newBankToUpdate];
       } else {
-        // If found, replace the existing record with the new one
         const updatedBanks = [...prev];
-        updatedBanks[index] = newBankToUpdate;
         return updatedBanks;
       }
     });
   };
 
-  const commitChanges = () => {
-    console.log(banksToUpdate);
+  const commitChanges = async () => {
+    const success = await postBankUpates(banksToUpdate);
+    setBanksToUpdate([]);
+    return success;
   };
 
   return { banks, updateBank, commitChanges, loading, error };
