@@ -16,3 +16,8 @@ export interface BankAPIGetResponseDefaultField {
   fieldValue: string;
   fieldValueId: number;
 }
+
+export interface BankAccountDefaultFieldUpdates {
+  bankAccountId: number;
+  defaultFields: BankAPIGetResponseDefaultField[];
+}

@@ -8,8 +8,7 @@ import { DataTable } from "./data-table";
 import { selectDataTableBankData } from "./selectors";
 
 export default function BanksPage() {
-  const [selectedBanks, setSelectedBankData] = React.useState<any[]>([]);
-  const { banks, loading: banksLoading } = useBanks();
+  const { banks, updateBank, loading: banksLoading } = useBanks();
   const { accountingFields, loading: accountingFieldsLoading } =
     useAccountingFields();
 
@@ -22,7 +21,7 @@ export default function BanksPage() {
   }
 
   const dataTableBanks = selectDataTableBankData(banks);
-  const columns = getColumns(accountingFields);
+  const columns = getColumns(accountingFields, updateBank);
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
@@ -32,11 +31,7 @@ export default function BanksPage() {
         </div>
       </div>
       <div className="min-h-[100vh] flex-1 rounded-xl md:min-h-min">
-        <DataTable
-          columns={columns}
-          data={dataTableBanks}
-          setSelectedData={setSelectedBankData}
-        />
+        <DataTable columns={columns} data={dataTableBanks} />
       </div>
     </div>
   );

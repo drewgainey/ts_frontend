@@ -24,13 +24,11 @@ import React from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  setSelectedData: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  setSelectedData,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const table = useReactTable({
@@ -47,21 +45,6 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
-
-  const selectedRowsData = React.useMemo(() => {
-    const selectedRows = table.getSelectedRowModel().rows;
-    return selectedRows.map((row) => {
-      return {
-        bankId: row.getValue("bankId"),
-        glAccount: row.getValue("glAccount"),
-        department: row.getValue("department"),
-      };
-    });
-  }, [table.getSelectedRowModel, rowSelection]);
-
-  React.useEffect(() => {
-    setSelectedData(selectedRowsData);
-  }, [selectedRowsData, setSelectedData]);
 
   return (
     <div>

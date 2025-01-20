@@ -7,14 +7,22 @@ export function selectDataTableBankData(
   if (!banks || banks.length === 0) {
     return [];
   }
+
   return banks.map((bank) => {
     const glAccount = bank.defaultFields.find(
       (field) => field.fieldName == "GL Code"
     )?.fieldValue;
+    const glAccountId = bank.defaultFields.find(
+      (field) => field.fieldName == "GL Code"
+    )?.fieldValueId;
 
     const department = bank.defaultFields.find(
       (field) => field.fieldName == "Department"
     )?.fieldValue;
+
+    const departmentId = bank.defaultFields.find(
+      (field) => field.fieldName == "Department"
+    )?.fieldValueId;
 
     return {
       bankId: bank.id,
@@ -24,7 +32,9 @@ export function selectDataTableBankData(
       currentBalance: bank.balance,
       availableBalance: bank.balance,
       glAccount: glAccount,
+      glAccountId: glAccountId,
       department: department,
+      departmentId: departmentId,
     };
   });
 }

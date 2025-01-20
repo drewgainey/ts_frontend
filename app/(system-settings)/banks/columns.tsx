@@ -1,14 +1,16 @@
 "use client";
-
+import * as React from "react";
 import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHeader";
-import { DataTableSelect } from "@/components/DataTableSelect";
+import { DataTableCombobox } from "@/components/dataTable/DataTableComboBox";
+import { DataTableSelect } from "@/components/dataTable/DataTableSelect";
 import { Checkbox } from "@/components/ui/checkbox";
 import { AccountingFeildsAPIGetResponseData } from "@/types/accountingFieldtypes";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableRows } from "./types";
 
 export const getColumns = (
-  accountingFields: AccountingFeildsAPIGetResponseData
+  accountingFields: AccountingFeildsAPIGetResponseData,
+  updateBank: (bankId: number, updatedData: any) => void
 ): ColumnDef<DataTableRows>[] => {
   return [
     {
@@ -85,21 +87,125 @@ export const getColumns = (
       header: "GL Code",
       accessorKey: "glAccount",
       cell: ({ row }) => {
+        const [open, setOpen] = React.useState(false);
+
+        const handleUpdateGlAccount = (value: string, id: string) => {
+          const bankId = row.getValue("bankId") as string;
+          const bankIdNum = parseInt(bankId, 0);
+
+          const updatePayload = {
+            defaultFields: [
+              {
+                fieldName: "Department",
+                fieldId: 2,
+                fieldValue: row.getValue("department"),
+                fieldValueId: row.getValue("departmentId"),
+              },
+              {
+                fieldName: "GL Code",
+                fieldId: 1,
+                fieldValue: value,
+                fieldValueId: id,
+              },
+            ],
+          };
+          updateBank(bankIdNum, updatePayload);
+        };
+
         const options = accountingFields.values
           .filter((value) => value.fieldName == "GL Code")[0]
-          .values.map((field) => field.fieldValue);
+          .values.map((field) => {
+            return { value: field.fieldValue, id: field.id };
+          });
 
-        return (
-          <DataTableSelect
-            value={row.getValue("glAccount")}
-            options={options}
-          />
-        );
+        const value = `${row.getValue("glAccount")}`;
+        const isSelected = row.getIsSelected();
+
+        const comboBoxProps = {
+          value: value,
+          options: options,
+          selectionPlaceholder: "GL Account",
+          open: open,
+          onOpenChange: setOpen,
+          onUpdate: handleUpdateGlAccount,
+        };
+
+        if (!isSelected) {
+          return (
+            <div className="font-medium">
+              {value !== "undefined" ? value : ""}
+            </div>
+          );
+        }
+        return <DataTableCombobox {...comboBoxProps} />;
       },
+    },
+    {
+      accessorKey: "glAccountId",
+      enableHiding: true,
     },
     {
       header: "Department",
       accessorKey: "department",
+      cell: ({ row }) => {
+        const [open, setOpen] = React.useState(false);
+
+        const handleUpdateDepartment = (value: string, id: string) => {
+          const bankId = row.getValue("bankId") as string;
+          const bankIdNum = parseInt(bankId, 0);
+
+          const updatePayload = {
+            defaultFields: [
+              {
+                fieldName: "Department",
+                fieldId: 2,
+                fieldValue: value,
+                fieldValueId: parseInt(id),
+              },
+              {
+                fieldName: "GL Code",
+                fieldId: 1,
+                fieldValue: row.getValue("glAccount"),
+                fieldValueId: row.getValue("glAccountId"),
+              },
+            ],
+          };
+
+          updateBank(bankIdNum, updatePayload);
+        };
+
+        const options = accountingFields.values
+          .filter((value) => value.fieldName == "Department")[0]
+          .values.map((field) => {
+            return { value: field.fieldValue, id: field.id };
+          });
+
+        const value = `${row.getValue("department")}`;
+
+        const isSelected = row.getIsSelected();
+
+        const comboBoxProps = {
+          value: value,
+          options: options,
+          selectionPlaceholder: "Department",
+          open: open,
+          onOpenChange: setOpen,
+          onUpdate: handleUpdateDepartment,
+        };
+
+        if (!isSelected) {
+          return (
+            <div className="font-medium">
+              {value !== "undefined" ? value : ""}
+            </div>
+          );
+        }
+        return <DataTableCombobox {...comboBoxProps} />;
+      },
+    },
+    {
+      accessorKey: "departmentId",
+      enableHiding: true,
     },
   ];
 };
