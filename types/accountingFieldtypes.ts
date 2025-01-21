@@ -10,6 +10,6 @@ export interface AccountingField {
   values: AccountingFieldValue[];
 }
 
-export interface AccountingFeildsAPIGetResponseData {
+export interface AccountingFeildsData {
   values: AccountingField[];
 }

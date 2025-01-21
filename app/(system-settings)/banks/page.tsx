@@ -1,6 +1,14 @@
 "use client";
 import PlaidButton from "@/components/plaid/PlaidButton";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import useAccountingFields from "@/hooks/useAccountingFields";
 import useBanks from "@/hooks/useBanks";
 import React from "react";
@@ -42,7 +50,20 @@ export default function BanksPage() {
           <PlaidButton />
         </div>
         <div className="rounded-xl bg-muted/50">
-          <Button onClick={() => commitChanges()}>Commit Changes</Button>
+          <Card>
+            <CardHeader>
+              <CardTitle>Sync ERP Mapping Changes </CardTitle>
+              <CardDescription>
+                Sync updates made with your database
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button onClick={() => commitChanges()} disabled={false}>
+                Sync Changes
+              </Button>
+            </CardContent>
+            <CardFooter></CardFooter>
+          </Card>
         </div>
       </div>
       <div className="min-h-[100vh] flex-1 rounded-xl md:min-h-min">

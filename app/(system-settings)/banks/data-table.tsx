@@ -17,8 +17,6 @@ import {
 } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
 import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import React from "react";
 
 interface DataTableProps<TData, TValue> {

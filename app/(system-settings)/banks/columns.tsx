@@ -2,17 +2,16 @@
 import * as React from "react";
 import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHeader";
 import { DataTableCombobox } from "@/components/dataTable/DataTableComboBox";
-import { DataTableSelect } from "@/components/dataTable/DataTableSelect";
 import { Checkbox } from "@/components/ui/checkbox";
-import { AccountingFeildsAPIGetResponseData } from "@/types/accountingFieldtypes";
-import { ColumnDef } from "@tanstack/react-table";
+import { AccountingFeildsData } from "@/types/accountingFieldtypes";
+import { ColumnDef, Row } from "@tanstack/react-table";
 import { DataTableRows } from "./types";
 
 export const getColumns = (
-  accountingFields: AccountingFeildsAPIGetResponseData,
+  accountingFields: AccountingFeildsData,
   updateBank: (bankId: number, updatedData: any) => void
 ): ColumnDef<DataTableRows>[] => {
-  return [
+  const baseColumns: ColumnDef<DataTableRows>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -206,4 +205,85 @@ export const getColumns = (
       enableHiding: true,
     },
   ];
+
+  const accountingFieldColumns: ColumnDef<DataTableRows>[] =
+    accountingFields.values.map((field) => {
+      const header = field.fieldName;
+      // not sure what to use here...maybe need an internal field name/id that is not just an int
+      const id = field.fieldName;
+      const accessorKey = field.fieldName.toLowerCase();
+
+      return {
+        header: header,
+        id: id,
+        accessorKey: accessorKey,
+        cell: ({ row }: { row: Row<DataTableRows> }) => {
+          const [open, setOpen] = React.useState(false);
+
+          const handleUpdateDepartment = (value: string, id: string) => {
+            const bankId = row.getValue("bankId") as string;
+            const bankIdNum = parseInt(bankId, 0);
+            //payload need to be dynamic
+            const updatePayload = [
+              {
+                fieldName: "Department",
+                fieldId: 2,
+                fieldValue: value,
+                fieldValueId: parseInt(id),
+              },
+              {
+                fieldName: "GL Code",
+                fieldId: 1,
+                fieldValue: row.getValue("glAccount"),
+                fieldValueId: row.getValue("glAccountId"),
+              },
+            ];
+
+            updateBank(bankIdNum, updatePayload);
+          };
+
+          const options = accountingFields.values
+            .filter((value) => value.fieldName == field.fieldName)[0]
+            .values.map((field) => {
+              return { value: field.fieldValue, id: field.id };
+            });
+          const value = `${row.getValue(accessorKey)}`;
+
+          const isSelected = row.getIsSelected();
+
+          const comboBoxProps = {
+            value: value,
+            options: options,
+            selectionPlaceholder: field.fieldName,
+            open: open,
+            onOpenChange: setOpen,
+            onUpdate: handleUpdateDepartment,
+          };
+
+          if (!isSelected) {
+            return (
+              <div className="font-medium">
+                {value !== "undefined" ? value : ""}
+              </div>
+            );
+          }
+          return <DataTableCombobox {...comboBoxProps} />;
+        },
+      };
+    });
+
+  // also needs to return a hidden column for fieldValueId. This is needed to be passed to the data table so the update methods can acccess the
+  // field id's but need to be set to always hidden
+  const fieldIdColumns = accountingFields.values.map(() => {
+    return {
+      accessorKey: "departmentId",
+      id: "departmentId",
+      enableHiding: true,
+    };
+  });
+
+  baseColumns.push(...accountingFieldColumns);
+  baseColumns.push(...fieldIdColumns);
+
+  return baseColumns;
 };

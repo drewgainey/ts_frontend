@@ -1,58 +1,16 @@
 "use client";
 import useBankTransactions from "@/hooks/useBankTransactions";
-import { Tabs } from "antd";
-import type { TabsProps } from "antd";
-import BankTransactionsTable from "./BankTransactionsTable";
-import {
-  selectExtraColumns,
-  selectMatchedBankTransactions,
-  selectUnmatchedBankTransactions,
-} from "./selectors";
-import useAccountingFields from "@/hooks/useAccountingFields";
 
 export default function BankFeedPage() {
-  const { transactions: bankTransactions, loading: bankTransactionsLoading } =
-    useBankTransactions();
-  const { accountingFields, loading: accountingFieldsLoading } =
-    useAccountingFields();
-
-  const unMatchedTransactions =
-    selectUnmatchedBankTransactions(bankTransactions);
-  const matchedTransactions = selectMatchedBankTransactions(bankTransactions);
-
-  const extraColumns = selectExtraColumns(accountingFields);
-
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "Unmatched Transactions",
-      children: (
-        <BankTransactionsTable
-          transactions={unMatchedTransactions}
-          extraColumns={extraColumns}
-        />
-      ),
-    },
-    {
-      key: "2",
-      label: "Matched Transactions",
-      children: <BankTransactionsTable transactions={matchedTransactions} />,
-    },
-    {
-      key: "3",
-      label: "Tab 3",
-      children: "Content of Tab Pane 3",
-    },
-  ];
-
-  if (bankTransactionsLoading) {
-    return "loading...";
-  }
+  const { transactions } = useBankTransactions();
 
   return (
-    <>
-      <Tabs defaultActiveKey="1" items={items} />
-    </>
+    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+        <div className="rounded-xl bg-muted/50"></div>
+        <div className="rounded-xl bg-muted/50"></div>
+      </div>
+      <div className="min-h-[100vh] flex-1 rounded-xl md:min-h-min"></div>
+    </div>
   );
-  // <BankFeedDataTable transactions={transactions} accountingFields={fields} />
 }

@@ -1,10 +1,10 @@
 import { fetchAccountingFields } from "@/data/fetchAccountingFields";
-import { AccountingFeildsAPIGetResponseData } from "@/types/accountingFieldtypes";
+import { AccountingFeildsData } from "@/types/accountingFieldtypes";
 import { useEffect, useState } from "react";
 
 export default function useAccountingFields() {
   const [accountingFields, setAccountingFields] =
-    useState<AccountingFeildsAPIGetResponseData>();
+    useState<AccountingFeildsData>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

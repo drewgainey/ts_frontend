@@ -1,6 +1,7 @@
 import { BankAPIGetResponse } from "@/types/bankTypes";
 import { DataTableRows } from "./types";
 
+// To work with the columns dynamically created for the accounting fields. The object key for any accounting feild needs to be in all lower case
 export function selectDataTableBankData(
   banks?: BankAPIGetResponse[]
 ): DataTableRows[] {
