@@ -40,8 +40,8 @@ export default function BanksPage() {
     return "loading..";
   }
 
-  const dataTableBanks = selectDataTableBankData(banks);
-  const columns = getColumns(accountingFields, updateBank);
+  const dataTableBanks = selectDataTableBankData(accountingFields, banks);
+  const columns = getColumns(accountingFields.values, updateBank);
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">

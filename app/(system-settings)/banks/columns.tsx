@@ -3,12 +3,12 @@ import * as React from "react";
 import { DataTableColumnHeader } from "@/components/dataTable/DataTableColumnHeader";
 import { DataTableCombobox } from "@/components/dataTable/DataTableComboBox";
 import { Checkbox } from "@/components/ui/checkbox";
-import { AccountingFeildsData } from "@/types/accountingFieldtypes";
+import { AccountingField } from "@/types/accountingFieldtypes";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import { DataTableRows } from "./types";
 
 export const getColumns = (
-  accountingFields: AccountingFeildsData,
+  accountingFields: AccountingField[],
   updateBank: (bankId: number, updatedData: any) => void
 ): ColumnDef<DataTableRows>[] => {
   const baseColumns: ColumnDef<DataTableRows>[] = [
@@ -82,135 +82,134 @@ export const getColumns = (
         return <div className="font-medium">{formatted}</div>;
       },
     },
-    {
-      header: "GL Code",
-      accessorKey: "glAccount",
-      cell: ({ row }) => {
-        const [open, setOpen] = React.useState(false);
+    // {
+    //   header: "GL Code",
+    //   accessorKey: "glAccount",
+    //   cell: ({ row }) => {
+    //     const [open, setOpen] = React.useState(false);
 
-        const handleUpdateGlAccount = (value: string, id: string) => {
-          const bankId = row.getValue("bankId") as string;
-          const bankIdNum = parseInt(bankId, 0);
+    //     const handleUpdateGlAccount = (value: string, id: string) => {
+    //       const bankId = row.getValue("bankId") as string;
+    //       const bankIdNum = parseInt(bankId, 0);
 
-          const updatePayload = [
-            {
-              fieldName: "Department",
-              fieldId: 2,
-              fieldValue: row.getValue("department"),
-              fieldValueId: row.getValue("departmentId"),
-            },
-            {
-              fieldName: "GL Code",
-              fieldId: 1,
-              fieldValue: value,
-              fieldValueId: id,
-            },
-          ];
-          updateBank(bankIdNum, updatePayload);
-        };
+    //       const updatePayload = [
+    //         {
+    //           fieldName: "Department",
+    //           fieldId: 2,
+    //           fieldValue: row.getValue("department"),
+    //           fieldValueId: row.getValue("departmentId"),
+    //         },
+    //         {
+    //           fieldName: "GL Code",
+    //           fieldId: 1,
+    //           fieldValue: value,
+    //           fieldValueId: id,
+    //         },
+    //       ];
+    //       updateBank(bankIdNum, updatePayload);
+    //     };
 
-        const options = accountingFields.values
-          .filter((value) => value.fieldName == "GL Code")[0]
-          .values.map((field) => {
-            return { value: field.fieldValue, id: field.id };
-          });
+    //     const options = accountingFields
+    //       .filter((value) => value.fieldName == "GL Code")[0]
+    //       .values.map((field) => {
+    //         return { value: field.fieldValue, id: field.id };
+    //       });
 
-        const value = `${row.getValue("glAccount")}`;
-        const isSelected = row.getIsSelected();
+    //     const value = `${row.getValue("glAccount")}`;
+    //     const isSelected = row.getIsSelected();
 
-        const comboBoxProps = {
-          value: value,
-          options: options,
-          selectionPlaceholder: "GL Account",
-          open: open,
-          onOpenChange: setOpen,
-          onUpdate: handleUpdateGlAccount,
-        };
+    //     const comboBoxProps = {
+    //       value: value,
+    //       options: options,
+    //       selectionPlaceholder: "GL Account",
+    //       open: open,
+    //       onOpenChange: setOpen,
+    //       onUpdate: handleUpdateGlAccount,
+    //     };
 
-        if (!isSelected) {
-          return (
-            <div className="font-medium">
-              {value !== "undefined" ? value : ""}
-            </div>
-          );
-        }
-        return <DataTableCombobox {...comboBoxProps} />;
-      },
-    },
-    {
-      accessorKey: "glAccountId",
-      id: "glAccountId",
-      enableHiding: true,
-    },
-    {
-      header: "Department",
-      accessorKey: "department",
-      cell: ({ row }) => {
-        const [open, setOpen] = React.useState(false);
+    //     if (!isSelected) {
+    //       return (
+    //         <div className="font-medium">
+    //           {value !== "undefined" ? value : ""}
+    //         </div>
+    //       );
+    //     }
+    //     return <DataTableCombobox {...comboBoxProps} />;
+    //   },
+    // },
+    // {
+    //   accessorKey: "glAccountId",
+    //   id: "glAccountId",
+    //   enableHiding: true,
+    // },
+    // {
+    //   header: "Department",
+    //   accessorKey: "department",
+    //   cell: ({ row }) => {
+    //     const [open, setOpen] = React.useState(false);
 
-        const handleUpdateDepartment = (value: string, id: string) => {
-          const bankId = row.getValue("bankId") as string;
-          const bankIdNum = parseInt(bankId, 0);
+    //     const handleUpdateDepartment = (value: string, id: string) => {
+    //       const bankId = row.getValue("bankId") as string;
+    //       const bankIdNum = parseInt(bankId, 0);
 
-          const updatePayload = [
-            {
-              fieldName: "Department",
-              fieldId: 2,
-              fieldValue: value,
-              fieldValueId: parseInt(id),
-            },
-            {
-              fieldName: "GL Code",
-              fieldId: 1,
-              fieldValue: row.getValue("glAccount"),
-              fieldValueId: row.getValue("glAccountId"),
-            },
-          ];
+    //       const updatePayload = [
+    //         {
+    //           fieldName: "Department",
+    //           fieldId: 2,
+    //           fieldValue: value,
+    //           fieldValueId: parseInt(id),
+    //         },
+    //         {
+    //           fieldName: "GL Code",
+    //           fieldId: 1,
+    //           fieldValue: row.getValue("glAccount"),
+    //           fieldValueId: row.getValue("glAccountId"),
+    //         },
+    //       ];
 
-          updateBank(bankIdNum, updatePayload);
-        };
+    //       updateBank(bankIdNum, updatePayload);
+    //     };
 
-        const options = accountingFields.values
-          .filter((value) => value.fieldName == "Department")[0]
-          .values.map((field) => {
-            return { value: field.fieldValue, id: field.id };
-          });
+    //     const options = accountingFields
+    //       .filter((value) => value.fieldName == "Department")[0]
+    //       .values.map((field) => {
+    //         return { value: field.fieldValue, id: field.id };
+    //       });
 
-        const value = `${row.getValue("department")}`;
+    //     const value = `${row.getValue("department")}`;
 
-        const isSelected = row.getIsSelected();
+    //     const isSelected = row.getIsSelected();
 
-        const comboBoxProps = {
-          value: value,
-          options: options,
-          selectionPlaceholder: "Department",
-          open: open,
-          onOpenChange: setOpen,
-          onUpdate: handleUpdateDepartment,
-        };
+    //     const comboBoxProps = {
+    //       value: value,
+    //       options: options,
+    //       selectionPlaceholder: "Department",
+    //       open: open,
+    //       onOpenChange: setOpen,
+    //       onUpdate: handleUpdateDepartment,
+    //     };
 
-        if (!isSelected) {
-          return (
-            <div className="font-medium">
-              {value !== "undefined" ? value : ""}
-            </div>
-          );
-        }
-        return <DataTableCombobox {...comboBoxProps} />;
-      },
-    },
-    {
-      accessorKey: "departmentId",
-      id: "departmentId",
-      enableHiding: true,
-    },
+    //     if (!isSelected) {
+    //       return (
+    //         <div className="font-medium">
+    //           {value !== "undefined" ? value : ""}
+    //         </div>
+    //       );
+    //     }
+    //     return <DataTableCombobox {...comboBoxProps} />;
+    //   },
+    // },
+    // {
+    //   accessorKey: "departmentId",
+    //   id: "departmentId",
+    //   enableHiding: true,
+    // },
   ];
 
   const accountingFieldColumns: ColumnDef<DataTableRows>[] =
-    accountingFields.values.map((field) => {
+    accountingFields.map((field) => {
       const header = field.fieldName;
-      // not sure what to use here...maybe need an internal field name/id that is not just an int
-      const id = field.fieldName;
+      const id = field.fieldName.toLowerCase();
       const accessorKey = field.fieldName.toLowerCase();
 
       return {
@@ -223,26 +222,30 @@ export const getColumns = (
           const handleUpdateDepartment = (value: string, id: string) => {
             const bankId = row.getValue("bankId") as string;
             const bankIdNum = parseInt(bankId, 0);
-            //payload need to be dynamic
-            const updatePayload = [
-              {
-                fieldName: "Department",
-                fieldId: 2,
-                fieldValue: value,
-                fieldValueId: parseInt(id),
-              },
-              {
-                fieldName: "GL Code",
-                fieldId: 1,
-                fieldValue: row.getValue("glAccount"),
-                fieldValueId: row.getValue("glAccountId"),
-              },
-            ];
 
+            const updatePayload = accountingFields
+              .filter((a) => a.fieldName != field.fieldName)
+              .map((field) => {
+                return {
+                  fieldName: field.fieldName,
+                  fieldId: parseInt(field.id),
+                  fieldValue: row.getValue(field.fieldName.toLowerCase()),
+                  fieldValueId: row.getValue(
+                    `${field.fieldName}Id`.toLowerCase()
+                  ),
+                };
+              });
+            updatePayload.push({
+              fieldName: field.fieldName,
+              fieldId: parseInt(field.id),
+              fieldValue: value,
+              fieldValueId: parseInt(id),
+            });
+            console.log(updatePayload);
             updateBank(bankIdNum, updatePayload);
           };
 
-          const options = accountingFields.values
+          const options = accountingFields
             .filter((value) => value.fieldName == field.fieldName)[0]
             .values.map((field) => {
               return { value: field.fieldValue, id: field.id };
@@ -263,7 +266,7 @@ export const getColumns = (
           if (!isSelected) {
             return (
               <div className="font-medium">
-                {value !== "undefined" ? value : ""}
+                {value !== "undefined" ? value : " test"}
               </div>
             );
           }
@@ -274,10 +277,10 @@ export const getColumns = (
 
   // also needs to return a hidden column for fieldValueId. This is needed to be passed to the data table so the update methods can acccess the
   // field id's but need to be set to always hidden
-  const fieldIdColumns = accountingFields.values.map(() => {
+  const fieldIdColumns = accountingFields.map((field) => {
     return {
-      accessorKey: "departmentId",
-      id: "departmentId",
+      accessorKey: `${field.fieldName}Id`.toLowerCase(),
+      id: `${field.fieldName}Id`.toLowerCase(),
       enableHiding: true,
     };
   });

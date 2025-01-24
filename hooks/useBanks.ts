@@ -55,13 +55,17 @@ export default function useBanks() {
       if (index === -1) {
         return [...prev, newBankToUpdate];
       } else {
-        const updatedBanks = [...prev];
+        const banksKeep = prev.filter(
+          (bank) => bank.bankAccountId != newBankToUpdate.bankAccountId
+        );
+        const updatedBanks = [...banksKeep, newBankToUpdate];
         return updatedBanks;
       }
     });
   };
 
   const commitChanges = async () => {
+    // this doesn't seem to work correctly. For example if all fields are not filled out. I think more work is needed in the backend
     const success = await postBankUpates(banksToUpdate);
     setBanksToUpdate([]);
     return success;

@@ -3,13 +3,19 @@ export interface GlAccountSelectOptions {
   options: string[]; // the options available in the select dropdown
 }
 
-export interface DataTableRows {
+export interface DataTableBankData {
   bankId: number;
   institution: string;
   accountName: string;
   accountType: string;
   currentBalance: number;
   availableBalance: number;
-  glAccount?: string | GlAccountSelectOptions;
+  glAccount?: string;
   department?: string;
 }
+
+export type DynamicFieldData = {
+  [key: string]: string | number;
+};
+
+export type DataTableRows = DataTableBankData & DynamicFieldData;

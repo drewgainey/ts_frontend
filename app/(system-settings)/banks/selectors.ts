@@ -1,8 +1,10 @@
 import { BankAPIGetResponse } from "@/types/bankTypes";
-import { DataTableRows } from "./types";
+import { AccountingFeildsData } from "@/types/accountingFieldtypes";
+import { DataTableRows, DynamicFieldData } from "./types";
 
 // To work with the columns dynamically created for the accounting fields. The object key for any accounting feild needs to be in all lower case
 export function selectDataTableBankData(
+  accountingFields: AccountingFeildsData,
   banks?: BankAPIGetResponse[]
 ): DataTableRows[] {
   if (!banks || banks.length === 0) {
@@ -10,20 +12,20 @@ export function selectDataTableBankData(
   }
 
   return banks.map((bank) => {
-    const glAccount = bank.defaultFields.find(
-      (field) => field.fieldName == "GL Code"
-    )?.fieldValue;
-    const glAccountId = bank.defaultFields.find(
-      (field) => field.fieldName == "GL Code"
-    )?.fieldValueId;
+    const fieldData: DynamicFieldData = {};
 
-    const department = bank.defaultFields.find(
-      (field) => field.fieldName == "Department"
-    )?.fieldValue;
+    // Populate fieldData with accounting field values from the bank's defaultFields
+    accountingFields.values.forEach((field) => {
+      const fieldValue = bank.defaultFields.find(
+        (defaultField) => defaultField.fieldName === field.fieldName
+      )?.fieldValue;
+      const fieldValueId = bank.defaultFields.find(
+        (defaultField) => defaultField.fieldName === field.fieldName
+      )?.fieldValueId;
 
-    const departmentId = bank.defaultFields.find(
-      (field) => field.fieldName == "Department"
-    )?.fieldValueId;
+      fieldData[field.fieldName.toLowerCase()] = fieldValue || "";
+      fieldData[`${field.fieldName}Id`.toLowerCase()] = fieldValueId || 0;
+    });
 
     return {
       bankId: bank.id,
@@ -32,10 +34,7 @@ export function selectDataTableBankData(
       accountType: bank.subType,
       currentBalance: bank.balance,
       availableBalance: bank.balance,
-      glAccount: glAccount,
-      glAccountId: glAccountId,
-      department: department,
-      departmentId: departmentId,
+      ...fieldData,
     };
   });
 }
