@@ -47,7 +47,6 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     initialState: {
       columnVisibility,
-      sorting: [{ id: "bankId", desc: false }],
     },
     state: {
       rowSelection,

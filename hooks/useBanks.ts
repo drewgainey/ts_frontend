@@ -50,7 +50,7 @@ export default function useBanks() {
       const index = prev.findIndex((bank) => bank.bankAccountId === bankId);
       const newBankToUpdate = {
         bankAccountId: bankId,
-        defaultFields: updatedData,
+        defaultFields: updatedData.filter((data) => data.fieldValueId != 0),
       };
       if (index === -1) {
         return [...prev, newBankToUpdate];

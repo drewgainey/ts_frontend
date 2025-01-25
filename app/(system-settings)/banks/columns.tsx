@@ -39,7 +39,9 @@ export const getColumns = (
       enableHiding: false,
     },
     {
+      id: "bankId",
       accessorKey: "bankId",
+      sortingFn: "basic",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Bank ID" />
       ),
@@ -82,128 +84,6 @@ export const getColumns = (
         return <div className="font-medium">{formatted}</div>;
       },
     },
-    // {
-    //   header: "GL Code",
-    //   accessorKey: "glAccount",
-    //   cell: ({ row }) => {
-    //     const [open, setOpen] = React.useState(false);
-
-    //     const handleUpdateGlAccount = (value: string, id: string) => {
-    //       const bankId = row.getValue("bankId") as string;
-    //       const bankIdNum = parseInt(bankId, 0);
-
-    //       const updatePayload = [
-    //         {
-    //           fieldName: "Department",
-    //           fieldId: 2,
-    //           fieldValue: row.getValue("department"),
-    //           fieldValueId: row.getValue("departmentId"),
-    //         },
-    //         {
-    //           fieldName: "GL Code",
-    //           fieldId: 1,
-    //           fieldValue: value,
-    //           fieldValueId: id,
-    //         },
-    //       ];
-    //       updateBank(bankIdNum, updatePayload);
-    //     };
-
-    //     const options = accountingFields
-    //       .filter((value) => value.fieldName == "GL Code")[0]
-    //       .values.map((field) => {
-    //         return { value: field.fieldValue, id: field.id };
-    //       });
-
-    //     const value = `${row.getValue("glAccount")}`;
-    //     const isSelected = row.getIsSelected();
-
-    //     const comboBoxProps = {
-    //       value: value,
-    //       options: options,
-    //       selectionPlaceholder: "GL Account",
-    //       open: open,
-    //       onOpenChange: setOpen,
-    //       onUpdate: handleUpdateGlAccount,
-    //     };
-
-    //     if (!isSelected) {
-    //       return (
-    //         <div className="font-medium">
-    //           {value !== "undefined" ? value : ""}
-    //         </div>
-    //       );
-    //     }
-    //     return <DataTableCombobox {...comboBoxProps} />;
-    //   },
-    // },
-    // {
-    //   accessorKey: "glAccountId",
-    //   id: "glAccountId",
-    //   enableHiding: true,
-    // },
-    // {
-    //   header: "Department",
-    //   accessorKey: "department",
-    //   cell: ({ row }) => {
-    //     const [open, setOpen] = React.useState(false);
-
-    //     const handleUpdateDepartment = (value: string, id: string) => {
-    //       const bankId = row.getValue("bankId") as string;
-    //       const bankIdNum = parseInt(bankId, 0);
-
-    //       const updatePayload = [
-    //         {
-    //           fieldName: "Department",
-    //           fieldId: 2,
-    //           fieldValue: value,
-    //           fieldValueId: parseInt(id),
-    //         },
-    //         {
-    //           fieldName: "GL Code",
-    //           fieldId: 1,
-    //           fieldValue: row.getValue("glAccount"),
-    //           fieldValueId: row.getValue("glAccountId"),
-    //         },
-    //       ];
-
-    //       updateBank(bankIdNum, updatePayload);
-    //     };
-
-    //     const options = accountingFields
-    //       .filter((value) => value.fieldName == "Department")[0]
-    //       .values.map((field) => {
-    //         return { value: field.fieldValue, id: field.id };
-    //       });
-
-    //     const value = `${row.getValue("department")}`;
-
-    //     const isSelected = row.getIsSelected();
-
-    //     const comboBoxProps = {
-    //       value: value,
-    //       options: options,
-    //       selectionPlaceholder: "Department",
-    //       open: open,
-    //       onOpenChange: setOpen,
-    //       onUpdate: handleUpdateDepartment,
-    //     };
-
-    //     if (!isSelected) {
-    //       return (
-    //         <div className="font-medium">
-    //           {value !== "undefined" ? value : ""}
-    //         </div>
-    //       );
-    //     }
-    //     return <DataTableCombobox {...comboBoxProps} />;
-    //   },
-    // },
-    // {
-    //   accessorKey: "departmentId",
-    //   id: "departmentId",
-    //   enableHiding: true,
-    // },
   ];
 
   const accountingFieldColumns: ColumnDef<DataTableRows>[] =

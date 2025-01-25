@@ -1,8 +1,18 @@
 "use client";
 import useBankTransactions from "@/hooks/useBankTransactions";
+import { getColumns } from "./columns";
+import { DataTable } from "./data-table";
+import { selectTransactionsData } from "./selectors";
 
 export default function BankFeedPage() {
-  const { transactions } = useBankTransactions();
+  const { transactions, loading } = useBankTransactions();
+
+  if (loading || !transactions) {
+    return "....";
+  }
+
+  const rows = selectTransactionsData(transactions);
+  const columns = getColumns();
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
@@ -10,7 +20,9 @@ export default function BankFeedPage() {
         <div className="rounded-xl bg-muted/50"></div>
         <div className="rounded-xl bg-muted/50"></div>
       </div>
-      <div className="min-h-[100vh] flex-1 rounded-xl md:min-h-min"></div>
+      <div className="min-h-[100vh] flex-1 rounded-xl md:min-h-min">
+        <DataTable columns={columns} data={rows} />
+      </div>
     </div>
   );
 }

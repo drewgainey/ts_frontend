@@ -13,9 +13,10 @@ export default function useBankTransactions() {
       setLoading(true);
       setError(null);
       try {
-        const data = await fetchTransactions(true);
-        setTransactions(data);
+        const response = await fetchTransactions();
+        setTransactions(response.data);
       } catch (err: any) {
+        console.log("error");
         setError(err.message || "An unknown error occurred");
       } finally {
         setLoading(false);
