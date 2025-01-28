@@ -17,7 +17,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
-import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
 import React from "react";
 
 interface DataTableProps<TData, TValue> {
@@ -56,12 +55,6 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className="rounded-md border">
-        <div className="flex">
-          <DataTableViewOptions
-            table={table}
-            excludedColumnIds={Object.keys(columnVisibility)}
-          />
-        </div>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

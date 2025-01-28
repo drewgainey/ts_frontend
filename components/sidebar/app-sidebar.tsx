@@ -61,7 +61,7 @@ const data = {
           url: "/bank_feed",
         },
         {
-          title: "Transaction Matching",
+          title: "Auto Matching Rules",
           url: "#",
         },
         {
