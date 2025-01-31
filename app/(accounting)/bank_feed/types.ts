@@ -8,3 +8,9 @@ export interface DataTableTransactions {
   accountid: string;
   accountName: string;
 }
+
+export interface DataTableERPTransaction {
+  erpTransactionid: string;
+  amount: number;
+  description: string;
+}

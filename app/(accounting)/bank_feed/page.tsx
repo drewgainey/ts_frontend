@@ -3,19 +3,27 @@ import { FileUploadCard } from "@/components/fileUpload";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useBankTransactions from "@/hooks/useBankTransactions";
-import { getColumns } from "./columns";
+import useERPTransactions from "@/hooks/useERPTransactions";
+import { getBankTransColumns, getERPTransColumns } from "./columns";
 import { DataTable } from "./data-table";
-import { selectTransactionsData } from "./selectors";
+import {
+  selectBankTransactionsData,
+  selectErpTransactionsData,
+} from "./selectors";
 
 export default function BankFeedPage() {
   const { transactions, loading } = useBankTransactions();
+  const { erpTransactions, loading: erpTransactionsLoading } =
+    useERPTransactions();
 
-  if (loading || !transactions) {
+  if (loading || !transactions || erpTransactionsLoading || !erpTransactions) {
     return "....";
   }
 
-  const rows = selectTransactionsData(transactions);
-  const columns = getColumns();
+  const bankRows = selectBankTransactionsData(transactions);
+  const bankColumns = getBankTransColumns();
+  const erpRows = selectErpTransactionsData(erpTransactions);
+  const erpColumns = getERPTransColumns();
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
@@ -37,11 +45,13 @@ export default function BankFeedPage() {
           </TabsList>
           <TabsContent value="bank">
             <Card>
-              <DataTable columns={columns} data={rows} />
+              <DataTable columns={bankColumns} data={bankRows} />
             </Card>
           </TabsContent>
           <TabsContent value="erp">
-            <Card>Journal Entries</Card>
+            <Card>
+              <DataTable columns={erpColumns} data={erpRows} />
+            </Card>
           </TabsContent>
           <TabsContent value="matches">
             <Card>Matches</Card>

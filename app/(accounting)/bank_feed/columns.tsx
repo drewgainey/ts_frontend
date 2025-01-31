@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { DataTableTransactions } from "./types";
+import { DataTableERPTransaction, DataTableTransactions } from "./types";
 
-export function getColumns(): ColumnDef<DataTableTransactions>[] {
+export function getBankTransColumns(): ColumnDef<DataTableTransactions>[] {
   return [
     {
       accessorKey: "transactionid",
@@ -36,6 +36,26 @@ export function getColumns(): ColumnDef<DataTableTransactions>[] {
     {
       accessorKey: "date",
       header: "date",
+    },
+  ];
+}
+
+export function getERPTransColumns(): ColumnDef<DataTableERPTransaction>[] {
+  return [
+    {
+      accessorKey: "erpTransactionid",
+      id: "erpTransactionid",
+      header: "erpTransactionid",
+    },
+    {
+      accessorKey: "amount",
+      id: "amount",
+      header: "Amount",
+    },
+    {
+      accessorKey: "description",
+      id: "description",
+      header: "description",
     },
   ];
 }

@@ -13,3 +13,16 @@ export async function fetchTransactions() {
 
   return data;
 }
+
+export async function fetchERPTransactions() {
+  const response = await fetch(`${baseUrl}/transactions/erp`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
+    },
+  });
+  const data = await response.json();
+
+  return data;
+}

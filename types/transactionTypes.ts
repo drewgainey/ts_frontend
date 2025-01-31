@@ -8,3 +8,8 @@ export interface BankTransaction {
   accountId: string;
   accountName: string;
 }
+export interface ERPTransaction {
+  erpTransactionId: string;
+  amount: number;
+  description: string;
+}
